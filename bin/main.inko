@@ -1,8 +1,8 @@
 import std.env
-import std.stdio.(STDERR, STDOUT)
+import std.stdio (STDERR, STDOUT)
 import std.sys
 
-import uuid.Uuid
+import uuid (Uuid)
 
 class async Main {
   fn async main {
@@ -20,7 +20,7 @@ class async Main {
         STDOUT.new.print('usage: inko-uuid [--nil|-4|-7]')
       }
       case Some(command) -> {
-        exit("'{command}' is not a inko-uuid command. See `inko-uuid --help`.")
+        exit("'${command}' is not a inko-uuid command. See `inko-uuid --help`.")
       }
     }
   }

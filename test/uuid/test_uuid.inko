@@ -1,13 +1,12 @@
-import std.test.Tests
-
-import uuid.Uuid
+import std.test (Tests)
+import uuid (Uuid)
 
 fn pub tests(t: mut Tests) {
-  t.test('Uuid.nil') fn (t) {   
+  t.test('Uuid.nil', fn (t) {
     t.equal(Uuid.nil.to_string, '00000000-0000-0000-0000-000000000000')
-  }
+  })
 
-  t.test('Uuid.new_v4') fn (t) {
+  t.test('Uuid.new_v4', fn (t) {
     let uuid = Uuid.new_v4
 
     t.equal(uuid.to_string.size, 36)
@@ -16,9 +15,9 @@ fn pub tests(t: mut Tests) {
 
     t.equal(bytes.get(6) & 0xF0, 0x40)
     t.equal(bytes.get(8) & 0xC0, 0x80)
-  }
+  })
 
-  t.test('Uuid.new_v7') fn (t) {
+  t.test('Uuid.new_v7', fn (t) {
     let uuid = Uuid.new_v7
 
     t.equal(uuid.to_string.size, 36)
@@ -27,5 +26,5 @@ fn pub tests(t: mut Tests) {
 
     t.equal(bytes.get(6) & 0xF0, 0x70)
     t.equal(bytes.get(8) & 0xC0, 0x80)
-  }
+  })
 }
