@@ -29,7 +29,7 @@ class pub Uuid {
   }
 
   fn pub static new_v7 -> Uuid {
-    let msecs = (DateTime.new.to_float * 1000.0).floor.to_int
+    let msecs = DateTime.new.to_int * 1000
     let bytes = Random.new.bytes(16)
 
     Uuid._v7_from_parts(msecs, bytes)
