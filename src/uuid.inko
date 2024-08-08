@@ -17,8 +17,11 @@ class pub Uuid {
   }
 
   fn pub static new_v4 -> Uuid {
-    let bytes = Random.new.bytes(16)
+    Uuid._v4_from_bytes(Random.new.bytes(16))
+  }
 
+  # Internal: exposed only for unit testing.
+  fn pub static _v4_from_bytes(bytes: ByteArray) -> Uuid {
     bytes.set(6, (bytes.get(6) & 0x0F) | 0x40)
     bytes.set(8, (bytes.get(8) & 0x3F) | 0x80)
 
@@ -26,10 +29,14 @@ class pub Uuid {
   }
 
   fn pub static new_v7 -> Uuid {
+    let msecs = (DateTime.new.to_float * 1000.0).floor.to_int
     let bytes = Random.new.bytes(16)
 
-    let msecs = (DateTime.new.to_float * 1000.0).floor.to_int
+    Uuid._v7_from_parts(msecs, bytes)
+  }
 
+  # Internal: exposed only for unit testing.
+  fn pub static _v7_from_parts(msecs: Int, bytes: ByteArray) -> Uuid {
     0.to(5).iter.each(fn (i) { bytes.set(i, (msecs >> ((5 - i) * 8)) & 0xFF) })
 
     bytes.set(6, (bytes.get(6) & 0x0F) | 0x70)

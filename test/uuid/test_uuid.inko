@@ -21,6 +21,32 @@ fn pub tests(t: mut Tests) {
     t.equal(bytes.get(8) & 0xC0, 0x80)
   })
 
+  # https://www.rfc-editor.org/rfc/rfc9562.html#name-example-of-a-uuidv4-value
+  t.test('Uuid.new_v4 against RFC 9562 test vector', fn (t) {
+    let bytes = ByteArray.new
+
+    bytes.push(0x91)
+    bytes.push(0x91)
+    bytes.push(0x08)
+    bytes.push(0xF7)
+    bytes.push(0x52)
+    bytes.push(0xD1)
+    bytes.push(0x33)
+    bytes.push(0x20)
+    bytes.push(0x5B)
+    bytes.push(0xAC)
+    bytes.push(0xF8)
+    bytes.push(0x47)
+    bytes.push(0xDB)
+    bytes.push(0x41)
+    bytes.push(0x48)
+    bytes.push(0xA8)
+
+    let uuid = Uuid._v4_from_bytes(bytes)
+
+    t.equal(uuid.to_string, '919108f7-52d1-4320-9bac-f847db4148a8')
+  })
+
   t.test('Uuid.new_v7', fn (t) {
     let uuid = Uuid.new_v7
 
@@ -30,5 +56,33 @@ fn pub tests(t: mut Tests) {
 
     t.equal(bytes.get(6) & 0xF0, 0x70)
     t.equal(bytes.get(8) & 0xC0, 0x80)
+  })
+
+  # https://www.rfc-editor.org/rfc/rfc9562.html#name-example-of-a-uuidv7-value
+  t.test('Uuid.new_v7 against RFC 9562 test vector', fn (t) {
+    let msecs = 1645557742000
+
+    let bytes = ByteArray.filled(with: 0, times: 6) # Allocate space for msecs.
+
+    # This position originally contains a 4-bit ver field (0x4)
+    # and a 12-bit rand_a field (0xCC3) in the test vector.
+    # Here, we set the ver field to 0x0 to verify correct bit swapping.
+    bytes.push(0x0C)
+    bytes.push(0xC3)
+
+    # Same as above: set the var field in the top 2 bits to 0b00 (originally 0b10).
+    bytes.push(0x18)
+
+    bytes.push(0xC4)
+    bytes.push(0xDC)
+    bytes.push(0x0C)
+    bytes.push(0x0C)
+    bytes.push(0x07)
+    bytes.push(0x39)
+    bytes.push(0x8F)
+
+    let uuid = Uuid._v7_from_parts(msecs, bytes)
+
+    t.equal(uuid.to_string.to_upper, '017F22E2-79B0-7CC3-98C4-DC0C0C07398F')
   })
 }
