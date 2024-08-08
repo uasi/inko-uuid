@@ -12,6 +12,10 @@ class pub Uuid {
     Uuid(ByteArray.filled(with: 0, times: 16))
   }
 
+  fn pub static max -> Uuid {
+    Uuid(ByteArray.filled(with: 0xFF, times: 16))
+  }
+
   fn pub static new_v4 -> Uuid {
     let bytes = Random.new.bytes(16)
 

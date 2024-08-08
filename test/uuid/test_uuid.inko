@@ -6,6 +6,10 @@ fn pub tests(t: mut Tests) {
     t.equal(Uuid.nil.to_string, '00000000-0000-0000-0000-000000000000')
   })
 
+  t.test('Uuid.max', fn (t) {
+    t.equal(Uuid.max.to_string, 'ffffffff-ffff-ffff-ffff-ffffffffffff')
+  })
+
   t.test('Uuid.new_v4', fn (t) {
     let uuid = Uuid.new_v4
 

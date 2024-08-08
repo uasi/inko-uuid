@@ -10,6 +10,9 @@ class async Main {
       case Some('--nil') -> {
         STDOUT.new.print(Uuid.nil.to_string)
       }
+      case Some('--max') -> {
+        STDOUT.new.print(Uuid.max.to_string)
+      }
       case Some('-4') or None -> {
         STDOUT.new.print(Uuid.new_v4.to_string)
       }
@@ -17,10 +20,10 @@ class async Main {
         STDOUT.new.print(Uuid.new_v7.to_string)
       }
       case Some('--help') or Some('-h') or None -> {
-        STDOUT.new.print('usage: inko-uuid [--nil|-4|-7]')
+        STDOUT.new.print('usage: inko-uuid [--nil|--max|-4|-7]')
       }
       case Some(command) -> {
-        exit("'${command}' is not a inko-uuid command. See `inko-uuid --help`.")
+        exit("'${command}' is not an inko-uuid command. See `inko-uuid --help`.")
       }
     }
   }
