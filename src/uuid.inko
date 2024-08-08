@@ -44,6 +44,15 @@ class pub Uuid {
 
     Uuid(bytes)
   }
+
+  fn pub static v8_from_bytes(bytes: ByteArray) -> Uuid {
+    bytes.resize(size: 16, value: 0)
+
+    bytes.set(6, (bytes.get(6) & 0x0F) | 0x80)
+    bytes.set(8, (bytes.get(8) & 0x3F) | 0x80)
+
+    Uuid(bytes)
+  }
 }
 
 impl IntoByteArray for Uuid {

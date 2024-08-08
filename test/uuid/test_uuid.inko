@@ -85,4 +85,47 @@ fn pub tests(t: mut Tests) {
 
     t.equal(uuid.to_string.to_upper, '017F22E2-79B0-7CC3-98C4-DC0C0C07398F')
   })
+
+  # https://www.rfc-editor.org/rfc/rfc9562.html#name-example-of-a-uuidv8-value-n
+  t.test('Uuid.new_v8 against RFC 9562 test vector', fn (t) {
+    let bytes = ByteArray.new
+
+    # SHA-256: 5c146b143c524afd938a375d0df1fbf6fe12a66b645f72f6158759387e51f3c8
+    bytes.push(0x5C)
+    bytes.push(0x14)
+    bytes.push(0x6B)
+    bytes.push(0x14)
+    bytes.push(0x3C)
+    bytes.push(0x52)
+    bytes.push(0x4A)
+    bytes.push(0xFD)
+    bytes.push(0x93)
+    bytes.push(0x8A)
+    bytes.push(0x37)
+    bytes.push(0x5D)
+    bytes.push(0x0D)
+    bytes.push(0xF1)
+    bytes.push(0xFB)
+    bytes.push(0xF6)
+    bytes.push(0xFE)
+    bytes.push(0x12)
+    bytes.push(0xA6)
+    bytes.push(0x6B)
+    bytes.push(0x64)
+    bytes.push(0x5F)
+    bytes.push(0x72)
+    bytes.push(0xF6)
+    bytes.push(0x15)
+    bytes.push(0x87)
+    bytes.push(0x59)
+    bytes.push(0x38)
+    bytes.push(0x7E)
+    bytes.push(0x51)
+    bytes.push(0xF3)
+    bytes.push(0xC8)
+
+    let uuid = Uuid.v8_from_bytes(bytes)
+
+    t.equal(uuid.to_string, '5c146b14-3c52-8afd-938a-375d0df1fbf6')
+  })
 }
