@@ -27,6 +27,6 @@ class async Main {
 }
 
 fn exit(message: String) -> Never {
-  STDERR.new.print("error: {message}")
+  STDERR.new.print("error: ${message}")
   sys.exit(1)
 }
