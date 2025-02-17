@@ -1,35 +1,28 @@
 import std.env
-import std.stdio (STDERR, STDOUT)
+import std.stdio (Stderr, Stdout)
 import std.sys
-
 import uuid (Uuid)
 
-class async Main {
+type async Main {
   fn async main {
     match env.arguments.opt(0) {
-      case Some('--nil') -> {
-        STDOUT.new.print(Uuid.nil.to_string)
-      }
-      case Some('--max') -> {
-        STDOUT.new.print(Uuid.max.to_string)
-      }
-      case Some('-4') or None -> {
-        STDOUT.new.print(Uuid.new_v4.to_string)
-      }
-      case Some('-7') -> {
-        STDOUT.new.print(Uuid.new_v7.to_string)
-      }
+      case Some('--nil') -> Stdout.new.print(Uuid.nil.to_string)
+      case Some('--max') -> Stdout.new.print(Uuid.max.to_string)
+      case Some('-4') or None -> Stdout.new.print(Uuid.new_v4.to_string)
+      case Some('-7') -> Stdout.new.print(Uuid.new_v7.to_string)
       case Some('--help') or Some('-h') or None -> {
-        STDOUT.new.print('usage: inko-uuid [--nil|--max|-4|-7]')
+        Stdout.new.print('usage: inko-uuid [--nil|--max|-4|-7]')
       }
       case Some(command) -> {
-        exit("'${command}' is not an inko-uuid command. See `inko-uuid --help`.")
+        exit(
+          "'${command}' is not an inko-uuid command. See `inko-uuid --help`.",
+        )
       }
     }
   }
 }
 
 fn exit(message: String) -> Never {
-  STDERR.new.print("error: ${message}")
+  Stderr.new.print('error: ${message}')
   sys.exit(1)
 }

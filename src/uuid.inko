@@ -5,7 +5,7 @@ import std.range (InclusiveRange)
 import std.string (StringBuffer, ToString)
 import std.time (DateTime)
 
-class pub Uuid {
+type pub Uuid {
   let @bytes: ByteArray
 
   fn pub static nil -> Uuid {
@@ -29,7 +29,7 @@ class pub Uuid {
   }
 
   fn pub static new_v7 -> Uuid {
-    let msecs = DateTime.new.to_int * 1000
+    let msecs = DateTime.utc.to_int * 1000
     let bytes = Random.new.bytes(16)
 
     Uuid._v7_from_parts(msecs, bytes)
